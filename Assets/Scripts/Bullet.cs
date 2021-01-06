@@ -80,5 +80,35 @@ public class Bullet : MonoBehaviour
 
             Destroy(gameObject);
         }
+
+        if (ufo != null)
+        {
+            FindObjectOfType<Game>().PlayExplosion(2);
+            Canvas canvas = FindObjectOfType<Canvas>();
+            Text textComponent = canvas.transform.GetChild(0).gameObject.GetComponent<Text>();
+            Text lives = canvas.transform.GetChild(1).gameObject.GetComponent<Text>();
+
+            if (textComponent != null)
+            {
+                Game game = FindObjectOfType<Game>();
+                game.score += 500;
+                int score = game.score;
+
+                textComponent.text = "Score: " + score;
+
+                if (game.score > game.interval)
+                {
+                    game.interval += game.inter;
+                    Control ship = FindObjectOfType<Control>();
+                    ship.lives++;
+                    lives.text = "Lives: " + ship.lives;
+                }
+
+            }
+
+            Destroy(gameObject);
+            Destroy(ufo.gameObject);
+
+        }
     }
 }
